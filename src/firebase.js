@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getStorage, ref } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCdgVuf7IdNp-Ddr8kc6OkecxGEXRH7axk",
-  authDomain: "linkedin-clone-b8669.firebaseapp.com",
-  projectId: "linkedin-clone-b8669",
-  storageBucket: "linkedin-clone-b8669.appspot.com",
-  messagingSenderId: "250335019812",
-  appId: "1:250335019812:web:bb49685c8063eb6ce1e9b1",
-  measurementId: "G-BQ0VW8H8LT"
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE,
+  messagingSenderId: process.env.MESSAGE_SENDER,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);

@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Header from './components/Header';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import 'dotenv/config'
 
 function App(props) {
   useEffect(() => {

@@ -81,10 +81,12 @@ const Main = (props) => {
                     props.loading && <img src={eclipseSvg} alt='img'/>
                 }
                 {props.articles.length > 0 && 
-                props.articles.map((article, key)=>(                
+                props.articles.map((article, key)=>{
+                    console.log('img url',article.actor.image.trim())
+                    return(                
                 <Article key={key}>
                     <SharedAfter>
-                        <a href='/'>
+                        <a href='#'>
                             <img src={article.actor.image} alt="" />
                             <div>
                                 <span>{article.actor.title}</span>
@@ -101,7 +103,7 @@ const Main = (props) => {
                     </Description>
                     <SharedImage>
                         <a href='/'>
-                            {!article.sharedImg && article.video? (<ReactPlayer width={'100%'} url={article.video}/>):(<img src={article.sharedImg} alt='img'/>)}
+                            {!article.sharedImg && article.video? (<ReactPlayer width={'100%'} url={article.video}/>):(article.sharedImg.trim()!==""&&<img src={article.sharedImg} alt='img'/>)}
                         </a>
                     </SharedImage>
                     <SocialCounts>
@@ -135,7 +137,7 @@ const Main = (props) => {
                         </button>
                     </SocialActions>
                 </Article>
-                ))}
+                )})}
             </Content>
         )
         }

@@ -225,7 +225,10 @@ const SignOut = styled.div`
         text-align: center;
         display: ${(props)=>(props.show?'flex':'none')};
         align-items: center;
-        justify-content: center;    
+        justify-content: center;
+        @media (max-width: 768px){
+            top: 0;
+        }    
 `;
 const User = styled(NavList)`
     a > svg {

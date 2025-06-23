@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { signOutAPI } from '../actions';
@@ -13,6 +13,12 @@ import navWork from "../images/nav-work.svg"
 import downIcon from "../images/down-icon.svg"
 
 const Header = (props) => {
+    const [show, setShow] = useState(false)
+
+    const handleToggleShow = ()=>{
+        setShow(prev=>!prev)
+    }
+
     return (
         <Container>
             <Content>
@@ -64,10 +70,12 @@ const Header = (props) => {
                         <User>
                             <a>
                                 {props.user && props.user.photoURL?(<img src={props.user.photoURL} alt="" />):(<img src="/images/user.svg" alt="" />)}
-                                <span>Me <img src={downIcon} alt="" />
+                                <span>Me <img src={downIcon} alt="" onClick={()=>{
+                                    handleToggleShow()
+                                }}/>
                                 </span>
                             </a>
-                            <SignOut onClick={()=> props.signOut()}>
+                            <SignOut show={show} onClick={()=> props.signOut()}>
                                 <a>Sign Out</a>
                             </SignOut>
                         </User>
@@ -215,8 +223,9 @@ const SignOut = styled.div`
         height: 40px;
         font-size: 60px;
         text-align: center;
-        display: none;
-    
+        display: ${(props)=>(props.show?'flex':'none')};
+        align-items: center;
+        justify-content: center;    
 `;
 const User = styled(NavList)`
     a > svg {
@@ -235,9 +244,7 @@ const User = styled(NavList)`
 
     &:hover {
         ${SignOut}{
-            align-items: center;
             display: flex;
-            justify-content: center;
         }
     }
 `;

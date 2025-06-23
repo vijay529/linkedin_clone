@@ -22,13 +22,12 @@ const PostModal = (props) => {
     const modalRef = useRef(null)
 
     useEffect(()=>{
-        console.log("this is prog", props.progress)
         if(props.progress==="100"){
             console.log("this is prog", props.progress)
             const fakeEvent = {
                 target:modalRef.current,
                 currentTarget:modalRef.current,
-                preventDefault:()=>{console.log("preventDefault() called");}
+                preventDefault:()=>{console.log("");}
             }
             reset(fakeEvent)
         }

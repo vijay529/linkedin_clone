@@ -100,6 +100,20 @@ export function postArticleAPI(payload) {
                 description: payload.description,
             })
             dispatch(setLoading(false));
+        }else{
+            addDoc(coll, {
+                actor: {
+                    description: payload.user.email,
+                    title: payload.user.displayName,
+                    date: payload.timestamp,
+                    image: payload.user.photoURL
+                },
+                video: '',
+                sharedImg: '',
+                comments: 0,
+                description: payload.description,
+            })
+            dispatch(setLoading(false));
         }
     }
 }

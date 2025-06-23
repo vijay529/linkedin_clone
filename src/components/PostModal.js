@@ -23,7 +23,6 @@ const PostModal = (props) => {
 
     useEffect(()=>{
         if(props.progress==="100"){
-            console.log("this is prog", props.progress)
             const fakeEvent = {
                 target:modalRef.current,
                 currentTarget:modalRef.current,
@@ -65,7 +64,7 @@ const PostModal = (props) => {
 
         props.postArticle(payload);
         
-        // reset(e);
+        if(payload.image===""){reset(e);}
 
     }
     

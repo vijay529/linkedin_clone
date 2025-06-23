@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import feedIcon from "../images/feed-icon.svg"
+import rightIcon from "../images/right-icon.svg"
+import dreamJobIcon from "../images/dream_jobs.jpg"
 
 const Rightside = (props) => {
     return(
@@ -6,7 +9,7 @@ const Rightside = (props) => {
             <FollowCard>
                 <Title>
                     <h2>Add to your feed</h2>
-                    <img src="/images/feed-icon.svg" alt="" />
+                    <img src={feedIcon} alt="" />
                 </Title>
 
                 <FeedList>
@@ -31,10 +34,10 @@ const Rightside = (props) => {
                 </FeedList>
                 <Recommendation>
                     View all recommendations</Recommendation>
-                    <img src="/images/right-icon.svg" alt="" />
+                    <img src={rightIcon} alt="" />
             </FollowCard>
             <BannerCard>
-                <img src="/images/dream_jobs.jpg" alt="" />
+                <img src={dreamJobIcon} alt="" />
             </BannerCard>
         </Container>
 )

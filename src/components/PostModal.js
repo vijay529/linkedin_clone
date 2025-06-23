@@ -1,11 +1,16 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { connect } from 'react-redux';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import { postArticleAPI } from '../actions';
+import closePng from '../images/close.png'
+import userSvg from '../images/user.svg'
+import galleryPng from '../images/gallery.png'
+import ytPng from '../images/youtube.png'
+import commentPng from '../images/comment.png'
 
 
 const PostModal = (props) => {
@@ -13,6 +18,21 @@ const PostModal = (props) => {
     const [sharedImage, setSharedImage] = useState('');
     const [videoLink, setVideoLink] = useState('');
     const [assetArea, setAssetArea] = useState('');
+
+    const modalRef = useRef(null)
+
+    useEffect(()=>{
+        console.log("this is prog", props.progress)
+        if(props.progress==="100"){
+            console.log("this is prog", props.progress)
+            const fakeEvent = {
+                target:modalRef.current,
+                currentTarget:modalRef.current,
+                preventDefault:()=>{console.log("preventDefault() called");}
+            }
+            reset(fakeEvent)
+        }
+    },[props.progress])
 
     const handleChange = (e) => {
         const image = e.target.files[0];
@@ -30,7 +50,7 @@ const PostModal = (props) => {
         setAssetArea(area);
     }
 
-    const postArticle = (e) => {
+    const postArticle = async(e) => {
         e.preventDefault();
         if (e.target !== e.currentTarget) {
             return;
@@ -45,9 +65,11 @@ const PostModal = (props) => {
         };
 
         props.postArticle(payload);
-        reset(e);
-    }
+        
+        // reset(e);
 
+    }
+    
 
 
     const reset = (e) => {
@@ -60,18 +82,18 @@ const PostModal = (props) => {
     return (
     <>
         { props.showModal === 'open' &&
-        <Container>
+        <Container ref={modalRef}>
             <Content>
                 <Header>
                     <h2>Create a post</h2>
                     <button onClick = {(event) => reset(event)}>
-                        <img src="/images/close.png" alt="" onClick = {(event) => reset(event)}/>
+                        <img src={closePng} alt="" onClick = {(event) => reset(event)}/>
                     </button>
                 </Header>
                 <SharedContent>
                     <UserInfo>
                         {props.user.photoURL ? (<img src={props.user.photoURL} alt='user'/>) :
-                        (<img src="/images/user.svg" alt="" />)}
+                        (<img src={userSvg} alt="" />)}
                         <span>{props.user.displayName}</span>
                     </UserInfo>
                     <Editor>
@@ -80,7 +102,8 @@ const PostModal = (props) => {
                     <UploadImage>
                         <input type='file' accept='image/gif, image/jpg, image/png, image/jpeg' id='file' style={{display: 'none'}} onChange={handleChange}/>
                         <p><label htmlFor="file">Select an image </label></p>
-                        {sharedImage && <img src={URL.createObjectURL(sharedImage)}/>}
+                        <p>{props.progress}</p>
+                        {sharedImage && <img src={URL.createObjectURL(sharedImage)} alt=''/>}
                     </UploadImage>)
                         :
                     (    assetArea === 'media' && (
@@ -95,15 +118,15 @@ const PostModal = (props) => {
                 <ShareCreation>
                     <AttachAssets>
                         <AssetButton onClick={() => switchAssetArea('image')}>
-                            <img src="/images/gallery.png" alt="" />
+                            <img src={galleryPng} alt="" />
                         </AssetButton>
                         <AssetButton onClick={() => switchAssetArea('media')}>
-                            <img src="/images/youtube.png" alt="" />
+                            <img src={ytPng} alt="" />
                         </AssetButton>
                     </AttachAssets>
                     <ShareComment>
                         <AssetButton>
-                            <img src="/images/comment.png" alt="" />
+                            <img src={commentPng} alt="" />
                             Anyone
                         </AssetButton>
                     </ShareComment>
@@ -272,6 +295,7 @@ const UploadImage = styled.div`
 const mapStateToProps = (state) => {
     return {
         user: state.userState.user,
+        progress: state.articleState.progress
     }
 };
 const mapDispatchToProps = (dispatch) => ({

@@ -1,11 +1,9 @@
-import { auth, provider } from '../firebase';
+import { auth, provider, db } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
-import { SET_USER, SET_LOADING_STATUS,  GET_ARTICLES} from '../actions/actionType';
-import db from '../firebase';
+import { SET_USER, SET_LOADING_STATUS,  GET_ARTICLES, SET_PROGRESS} from '../actions/actionType';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, orderBy, query, onSnapshot } from 'firebase/firestore/lite';
-
-const coll = collection(db, 'articles');
+import { addDoc, collection, orderBy, query } from 'firebase/firestore';
+import { onSnapshot } from "firebase/firestore";
 
 export const setUser = (payload) => ({
     type: SET_USER,
@@ -22,12 +20,17 @@ export const getArticles = (payload)=>({
     payload: payload,
 })
 
+export const setProgress = (payload)=>({
+    type:SET_PROGRESS,
+    payload: payload
+})
+
 export function signInAPI() {
     return (dispatch) => {
         signInWithPopup(auth, provider).then((payload) => {
             dispatch(setUser(payload.user));
         })
-        .catch((error) => alert(error.message));
+        .catch((error) => console.log(error.message));
     }
 }
 
@@ -53,6 +56,7 @@ export function signOutAPI() {
 
 export function postArticleAPI(payload) {
     return (dispatch) => {
+    const coll = collection(db, 'articles');
         dispatch(setLoading(true));
         if(payload.image !== ''){
             const storage = getStorage();
@@ -60,7 +64,7 @@ export function postArticleAPI(payload) {
             const uploadTask = uploadBytesResumable(storageRef, payload.image);
             uploadTask.on("state_changed", (snapshot)=>{
                 const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-                console.log(`progress: ${progress}%`);
+                dispatch(setProgress(progress.toFixed(0)))
             }, (error)=>{
                 console.log(error.code)
             }, async() => {
@@ -78,6 +82,7 @@ export function postArticleAPI(payload) {
                     description: payload.description,
                 })
                 dispatch(setLoading(false));
+                dispatch(setProgress(0))
             })        
 
         }else if(payload.video){
@@ -101,10 +106,11 @@ export function postArticleAPI(payload) {
 
 export function getArticleApi(){
     return (dispatch)=>{
-        const coll = collection(db, 'articles');
+        const collref = collection(db, 'articles')
         let payload;
-        const q = query(coll, orderBy('actor.date', 'desc'));
-        const snap = onSnapshot(q, snapshot=>{
+        const q = query(collref, orderBy('actor.date', 'desc'));
+
+        onSnapshot(q, snapshot=>{
             payload = snapshot.docs.map(doc=>doc.data());
             dispatch(getArticles(payload));
         })

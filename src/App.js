@@ -6,7 +6,7 @@ import Home from './components/Home';
 import Header from './components/Header';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import 'dotenv/config'
+
 
 function App(props) {
   useEffect(() => {
@@ -17,6 +17,7 @@ function App(props) {
     <div className="App">
       <Router>
         <Routes>
+          <Route exact path='/linkedin_clone' element={<Login />} />
           <Route exact path='/' element={<Login />} />
           <Route path='/home' element = {<><Header /><Home /></>}/>
         </Routes>

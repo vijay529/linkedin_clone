@@ -2,6 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { signOutAPI } from '../actions';
+import homeLogo from "../images/home-logo.svg"
+import searchIcon from "../images/search-icon.svg"
+import navHome from "../images/nav-home.svg"
+import navNetwork from "../images/nav-network.svg"
+import navJobs from "../images/nav-jobs.svg"
+import navMessaging from "../images/nav-messaging.svg"
+import navNotifications from "../images/nav-notifications.svg"
+import navWork from "../images/nav-work.svg"
+import downIcon from "../images/down-icon.svg"
 
 const Header = (props) => {
     return (
@@ -9,7 +18,7 @@ const Header = (props) => {
             <Content>
                 <Logo >
                     <a href="/home">
-                        <img src="/images/home-logo.svg" alt="" />
+                        <img src={homeLogo} alt="" />
                     </a>
                 </Logo>
                 <Search>
@@ -17,45 +26,45 @@ const Header = (props) => {
                         <input type="text" placeholder='Search' />
                     </div>
                     <SearchIcon>
-                        <img src="/images/search-icon.svg" alt="" />
+                        <img src={searchIcon} alt="" />
                     </SearchIcon>
                 </Search>
                 <Nav>
                     <NavListWrap>
                         <NavList className='active'>
                             <a >
-                                <img src="./images/nav-home.svg" alt="" />
+                                <img src={navHome} alt="" />
                                 <span>Home</span>
                             </a>
                         </NavList>
                         <NavList>
                             <a >
-                                <img src="./images/nav-network.svg" alt="" />
+                                <img src={navNetwork} alt="" />
                                 <span>My Network</span>
                             </a>
                         </NavList>
                         <NavList>
                             <a >
-                                <img src="./images/nav-jobs.svg" alt="" />
+                                <img src={navJobs} alt="" />
                                 <span>Jobs</span>
                             </a>
                         </NavList>
                         <NavList>
                             <a >
-                                <img src="./images/nav-messaging.svg" alt="" />
+                                <img src={navMessaging} alt="" />
                                 <span>Messaging</span>
                             </a>
                         </NavList>
                         <NavList>
                             <a >
-                                <img src="./images/nav-notifications.svg" alt="" />
+                                <img src={navNotifications} alt="" />
                                 <span>Notifications</span>
                             </a>
                         </NavList>
                         <User>
                             <a>
                                 {props.user && props.user.photoURL?(<img src={props.user.photoURL} alt="" />):(<img src="/images/user.svg" alt="" />)}
-                                <span>Me <img src="/images/down-icon.svg" alt="" />
+                                <span>Me <img src={downIcon} alt="" />
                                 </span>
                             </a>
                             <SignOut onClick={()=> props.signOut()}>
@@ -64,9 +73,9 @@ const Header = (props) => {
                         </User>
                         <Work>
                             <a>
-                                <img src="/images/nav-work.svg" alt="" />
+                                <img src={navWork} alt="" />
                                 <span>Work
-                                    <img src="/images/down-icon.svg" alt="" />
+                                    <img src={downIcon} alt="" />
                                 </span>
                             </a>
                         </Work>

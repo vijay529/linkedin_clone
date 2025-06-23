@@ -4,6 +4,17 @@ import styled from 'styled-components';
 import PostModal from './PostModal';
 import { connect } from 'react-redux';
 import ReactPlayer from 'react-player';
+import photoIcon from "../images/photo-icon.svg"
+import videoIcon from "../images/video-icon.svg"
+import eventIcon from "../images/event-icon.svg"
+import articleIcon from "../images/article-icon.svg"
+import userSvg from '../images/user.svg'
+import eclipseSvg from '../images/Eclipse-1s-200px.svg'
+import ellipsisSvg from '../images/ellipsis.png'
+import likeSvg from '../images/like-button.svg'
+import commentSvg from '../images/comment.svg'
+import instaShare from '../images/instagram-share.svg'
+import rightSvg from '../images/right-side.svg'
 
 const Main = (props) => {
     const [showModal, setShowModal] = useState('close'); 
@@ -34,7 +45,7 @@ const Main = (props) => {
     if(props.user && props.user.photoURL){
          src = props.user.photoURL;
     }else{
-         src = '/images/user.svg'
+         src = userSvg
     }
     return(
     <>
@@ -47,19 +58,19 @@ const Main = (props) => {
 
                 <div>
                     <button>
-                        <img src="/images/photo-icon.svg" alt="" />
+                        <img src={photoIcon} alt="" />
                         <span>Photo</span>
                     </button>
                     <button>
-                        <img src="/images/video-icon.svg" alt="" />
+                        <img src={videoIcon} alt="" />
                         <span>Video</span>
                     </button>
                     <button>
-                        <img src="/images/event-icon.svg" alt="" />
+                        <img src={eventIcon} alt="" />
                         <span>Event</span>
                     </button>
                     <button>
-                        <img src="/images/article-icon.svg" alt="" />
+                        <img src={articleIcon} alt="" />
                         <span>Write article</span>
                     </button>
                 </div>
@@ -67,7 +78,7 @@ const Main = (props) => {
         { props.articles.length === 0?(<p>No post uploaded</p>):(
             <Content>
                 {
-                    props.loading && <img src='/images/Eclipse-1s-200px.svg' alt='img'/>
+                    props.loading && <img src={eclipseSvg} alt='img'/>
                 }
                 {props.articles.length > 0 && 
                 props.articles.map((article, key)=>(                
@@ -82,7 +93,7 @@ const Main = (props) => {
                             </div>
                         </a>
                         <button>
-                            <img src="/images/ellipsis.png" alt="ellipsis" />
+                            <img src={ellipsisSvg} alt="ellipsis" />
                         </button>
                     </SharedAfter>
                     <Description>
@@ -107,19 +118,19 @@ const Main = (props) => {
                     </SocialCounts>
                     <SocialActions>
                         <button>
-                            <img src="/images/like-button.svg" alt="button" />
+                            <img src={likeSvg} alt="button" />
                             <span>Like</span>
                         </button>
                         <button>
-                            <img src = '/images/comment.svg' alt='img'/>
+                            <img src = {commentSvg} alt='img'/>
                             <span>Comments</span>
                         </button>
                         <button>
-                            <img src = '/images/instagram-share.svg' alt='img'/>
+                            <img src = {instaShare} alt='img'/>
                             <span>Share</span>
                         </button>
                         <button>
-                            <img src = '/images/right-side.svg' alt='img'/>
+                            <img src = {rightSvg} alt='img'/>
                             <span>Send</span>
                         </button>
                     </SocialActions>
